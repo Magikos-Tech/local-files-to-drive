@@ -109,7 +109,7 @@ function uploadFile(auth) {
             } else {
                 console.log('File Id: ', res.data.id);
                 //delete uploaded files in each iteration
-                matchedFiles.forEach(path => fs.existsSync(dirPath2 + path) && fs.unlinkSync(dirPath2 + path));
+                //matchedFiles.forEach(path => fs.existsSync(dirPath2 + path) && fs.unlinkSync(dirPath2 + path));
             }
         });
     }
