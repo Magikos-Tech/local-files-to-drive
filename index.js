@@ -4,7 +4,8 @@ const path = require('path');
 const process = require('process');
 const { authenticate } = require('@google-cloud/local-auth');
 const { google } = require('googleapis');
-const parent = require('./setup');
+const { config } = require("./setup");
+const parent = config.parent;
 const { match } = require('assert');
 var matchedFiles=[]
 
@@ -70,10 +71,13 @@ async function authorize() {
 }
 
 function uploadFile(auth) {
-    
+
+    let logsFolder = config.logsFolder;
+
     var extension = '.csv'
-    var dirPath = path.join(__dirname,"/upload_files");
-    var dirPath2 = path.join(__dirname,"/upload_files/");
+    var dirPath = path.join(__dirname,logsFolder);
+    let tempdir = logsFolder + "/";
+    var dirPath2 = path.join(__dirname,tempdir);
     //console.log(dirPath);
     var files = fs.readdirSync(dirPath);
     //console.log(files)

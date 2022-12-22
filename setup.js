@@ -1,4 +1,10 @@
 //parent folder on the drive
-const parent=['10D5EGpAK2ES8qb0LZ8s_kVLnHKYcNWst']
+const parent=['10D5EGpAK2ES8qb0LZ8s_kVLnHKYcNWst'];
+const logsFolder = "/upload_files";
 
-module.exports=parent;
+const config = {
+    parent: parent,
+    logsFolder: logsFolder
+}
+
+exports.config = config;
