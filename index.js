@@ -72,17 +72,18 @@ async function authorize() {
 function uploadFile(auth) {
     
     var extension = '.csv'
-    var dirPath = path.resolve(__dirname);
-    console.log(dirPath)
+    var dirPath = path.join(__dirname,"/upload_files");
+    var dirPath2 = path.join(__dirname,"/upload_files/");
+    //console.log(dirPath);
     var files = fs.readdirSync(dirPath);
-    console.log(files)
+    //console.log(files)
     for (var i = 0; i < files.length; i++) {
-        var pathext = path.extname(files[i])
+        var pathext = path.extname(dirPath2 + files[i])
         if (pathext == extension){
             matchedFiles.push(files[i])
         }
     }
-    console.log(matchedFiles)
+    //console.log(matchedFiles);
     
     const drive = google.drive({ version: 'v3', auth });
     for (file of matchedFiles) {
@@ -92,7 +93,7 @@ function uploadFile(auth) {
         };
         var media = {
             mimeType: 'text/csv',
-            body: fs.createReadStream(file)
+            body: fs.createReadStream(dirPath2 + file)
         };
         drive.files.create({
             resource: fileMetadata,
@@ -104,13 +105,13 @@ function uploadFile(auth) {
             } else {
                 console.log('File Id: ', res.data.id);
                 //delete uploaded files in each iteration
-                matchedFiles.forEach(path => fs.existsSync(path) && fs.unlinkSync(path))
+                matchedFiles.forEach(path => fs.existsSync(dirPath2 + path) && fs.unlinkSync(dirPath2 + path));
             }
         });
     }
 }
 
-/**
+/** + 
  * Creates a new script project, upload a file, and log the script's URL.
  *  @param {google.auth.OAuth2} auth An authorized OAuth2 client.
  */
